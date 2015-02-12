@@ -45,7 +45,11 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
-    },
+    }
+<<<<<<< HEAD
+
+};
+=======
     deviceType: function() {
             var agent = navigator.userAgent;      
             var isWebkit = (agent.indexOf("AppleWebKit") > 0);      
@@ -60,17 +64,10 @@ var app = {
             var isMobile = (isIOS || isAndroid || isNewBlackBerry || isWebOS || isWindowsMobile || isUnknownMobile);     
             var isTablet = (isIPad || (isMobile && !isSmallScreen));     
 
-            if(isMobile) {
-                window.location="phone/main.html";
-            }
-            else if(isTablet) {
-                window.location="tablet/main.html";
-            }
+            return(isMobile);
+
+
+            // if ( isMobile && isSmallScreen && document.cookie.indexOf( "mobileFullSiteClicked=") < 0 ) mobileRedirect();
     }
-
-//<<<<<<< HEAD
-
 };
-
-
-//>>>>>>> origin/master
+>>>>>>> origin/master
