@@ -45,11 +45,7 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
-    }
-<<<<<<< HEAD
-
-};
-=======
+    },
     deviceType: function() {
             var agent = navigator.userAgent;      
             var isWebkit = (agent.indexOf("AppleWebKit") > 0);      
@@ -64,10 +60,17 @@ var app = {
             var isMobile = (isIOS || isAndroid || isNewBlackBerry || isWebOS || isWindowsMobile || isUnknownMobile);     
             var isTablet = (isIPad || (isMobile && !isSmallScreen));     
 
-            return(isMobile);
-
-
-            // if ( isMobile && isSmallScreen && document.cookie.indexOf( "mobileFullSiteClicked=") < 0 ) mobileRedirect();
+            if(isMobile) {
+                window.location="phone/main.html";
+            }
+            else if(isTablet) {
+                window.location="tablet/main.html";
+            }
     }
+
+//<<<<<<< HEAD
+
 };
->>>>>>> origin/master
+
+
+//>>>>>>> origin/master
