@@ -45,6 +45,36 @@ body {
 	width:100%;
 }
 
+#center-list ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+#center-list li {
+	margin: 0 0 8% 0;
+}
+
+#center-list{
+	font-size: 200%;
+	display: block;
+	color: #FFF;
+	width: 100%;
+	padding: .2em .8em;
+	text-decoration: none;
+	overflow: scroll; }
+
+#header {
+	float:top;
+	position: fixed;
+	color:white;
+	font-weight:bold;
+	border:solid 1px #2d2d2d;
+	text-align:center;
+	background:#575757;
+	width:100%;
+	padding:5% 0;}
+
 /* Portrait layout (default) */
 .app {
 	background:url(../img/saanich.gif) no-repeat center top; /* 170px x 200px */
