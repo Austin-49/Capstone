@@ -55,6 +55,30 @@ body {
 	margin: 0 0 8% 0;
 }
 
+#loginsplash {
+	background:white;
+	border-radius:10px;
+	padding: 6em 3em;
+	position:absolute;
+	left:12%;
+	font-size:12px;
+	top:25%;
+}
+#menu-option  {
+	text-align:left;
+	font-size: 200%;
+	display: block;
+	color: #FFF;
+	background-color: white;
+	color: #979797;
+	width: 100%;
+	padding: .2em .8em;
+	overflow: scroll; 
+	border:none;
+	background:none;
+	text-decoration:none !important;
+}
+
 #center-list{
 	font-size: 200%;
 	display: block;
@@ -64,14 +88,28 @@ body {
 	text-decoration: none;
 	overflow: scroll; }
 
+#phone-bar {
+	top:0%;
+	background:#525252;
+	height:25px;
+	overflow:scroll;
+	position:relative
+	
+}
+
+#main-menu {
+	position:absolute;
+	width:100%;
+	background:white;
+}
+	
 #header {
 	float:top;
-	position: fixed;
+	position: relative;
 	color:white;
 	font-weight:bold;
-	border:solid 1px #2d2d2d;
 	text-align:center;
-	background:#575757;
+	background:#0099FF;
 	width:100%;
 	padding:5% 0;}
 
