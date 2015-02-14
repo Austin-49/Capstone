@@ -7,15 +7,18 @@
 		<link rel="stylesheet" type="text/css" href="../css/index.css" />
 		<script type="text/javascript" language="javascript" src="../js/index.js"></script>
 		<title></title>
+		<style>
+		body {background-color:white;}
+		</style>
 	</head>
 	<body onload="app.initialize()">
-		<div class="app">
-			<h1>PhoneGap</h1>
-			<div id="deviceready" class="blink">
-				<p class="event listening">Connecting to Device</p>
-				<p class="event received">Device is Ready</p>
-				<a href="stockpage.html">You're on a phone!</a>
-			</div>
+		<div id="phone-bar">   .</div>
+		<div id="header"><a href="stockpage.html"><img src="../img/menuIcon.png" style="left:10px; top:10px; position:absolute;"></a>Login</div>
+		<div id="loginsplash">
+		Username:<br><input type="text"> <br>
+		Password:<br><input type="text"> <br>
+		<a href="">forgot your password?</a>
+		</div>
 		</div>
 	</body>
 </html>
