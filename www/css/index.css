@@ -55,54 +55,25 @@ body {
 	margin: 0 0 8% 0;
 }
 
-#loginsplash {
-	background:white;
-	border-radius:10px;
-	padding: 6em 3em;
-	position:absolute;
-	left:12%;
-	font-size:12px;
-	top:25%;
-}
-
-#menu-option  {
-	text-align:left;
+#center-list{
 	font-size: 200%;
 	display: block;
-	background-color: white;
-	color: #979797;
+	color: #FFF;
 	width: 100%;
 	padding: .2em .8em;
-	overflow: scroll;
-	border:none;
-	background:none;
-	text-decoration:none !important;
-}
-
-#phone-bar {
-	top:0%;
-	background:#525252;
-	height:25px;
-	overflow:scroll;
-	position:relative
-	
-}
-
-#main-menu {
-	position:absolute;
-	width:100%;
-	background:white;
-}
+	text-decoration: none;
+	overflow: scroll; }
 
 #header {
-	position: relative;
+	float:top;
+	position: fixed;
 	color:white;
 	font-weight:bold;
+	border:solid 1px #2d2d2d;
 	text-align:center;
-	background:#0099FF;
+	background:#575757;
 	width:100%;
-	padding:5% 0;
-}
+	padding:5% 0;}
 
 /* Portrait layout (default) */
 .app {
