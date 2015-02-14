@@ -9,13 +9,16 @@
 		<title></title>
 	</head>
 	<body onload="app.initialize()">
-		<div class="app">
-			<h1>PhoneGap</h1>
-			<div id="deviceready" class="blink">
-				<p class="event listening">Connecting to Device</p>
-				<p class="event received">Device is Ready</p>
-				<a href="stockpage.html">You're on a phone!</a>
-			</div>
-		</div>
+		<div id="phone-bar"></div>
+		<div id="header"><a href="stockpage.html"><img src="../img/menuIcon.png" style="left:10px; top:10px; position:absolute;"></a>Drop-Ins</div>
+		<script>
+			var letter = 65;
+			for (i=0; i<26; i++) {
+				document.write("<div id='programIndexes'>");
+				document.write(String.fromCharCode(letter));
+				document.write("</div>");
+				letter++;
+			}
+		</script>
 	</body>
 </html>
