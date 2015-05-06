@@ -1,0 +1,11 @@
+
+<ion-view view-title="Categories">
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="program in programs | unique: 'category' | orderBy: '-category': true" href="#/app/programs/{{program.category}}">
+        <p style="white-space:normal; font-size:16px">{{program.category}}</p>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
+

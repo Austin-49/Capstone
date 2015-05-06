@@ -1,5 +1,15 @@
 <ion-view view-title="Search">
   <ion-content>
-    <h1>Search</h1>
+	<input id="searchText" type="search" ng-model="searchParam" ng-model-options="{debounce: 1000}" placeholder="filter programs..." aria-label="filter programs" />
+	<ion-list class="example-animate-container">
+		<ion-item class="animate-repeat" ng-repeat="program in searchProg | unique: 'name' | filter:searchParam as results" href="#/app/programs/{{program.category}}/{{program.ageGroup}}/{{program.name}}">
+			<p>{{program.name}}</p>
+			<p style ="padding-left:2em;">{{program.ageGroup}}</p>
+			<p style ="padding-left:2em;">{{program.category}}</p>
+		</ion-item> 
+		<ion-item class="animate-repeat" ng-if="results.length == 0">
+			<strong>No results found...</strong>
+		</ion-item> 
+	</ion-list> 
   </ion-content>
 </ion-view>

@@ -6,10 +6,22 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ui.utils'])
 
-.run(function($ionicPlatform) {
-
+.run(function($ionicPlatform, $http, $filter) {
+    // Store the current date to a variable so we know when we last updated the program info
+    window.localStorage['lastUpdate'] = JSON.stringify($filter('date')(new Date(), 'MM-dd-yyyy'));
+	// Make a request to the server grabbing our program info
+	$http.get('http://142.31.204.91/saanich/getCSV-1csv.php')
+		.success(function(data) {
+			console.log(data);
+			//Store the arrays of program info
+			window.localStorage['sharedArray'] = JSON.stringify(data);
+		})
+		.error(function() {
+			console.log("error");
+	});
+		
+		
   $ionicPlatform.ready(function() {
- 
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -22,22 +34,40 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ui.utils'])
   });
 })
 
-.service('sharedArray', function($http, $filter) {
-  window.localStorage['lastUpdate'] = JSON.stringify($filter('date')(new Date(), 'MM-dd-yyyy'));
-  this.getArray = function() {
-	return $http({
-		method: 'GET',
-		url: 'http://generalgoodsvendor.tk/saanich/getCSV.php?'
-		})
-		.success(function(data) {
-			console.log(data);
-			window.localStorage['sharedArray'] = JSON.stringify(data);
-		})
-		.error(function() {
-			console.log("error");
-		});
-	};
+.service('MyService', function() {
+	var array = JSON.parse(window.localStorage['sharedArray']);
+	var programs = [];
+	var searchProg = [];
+	for (i=0;i<array.length; i++) {
+		if (array[i][1] != "" ) {
+		programs.push({ category: array[i][1],
+						ageGroup: array[i][0],
+						name: array[i][3],
+						startTime: array[i][5],
+						memberRegDate: array[i][8],
+						age: array[i][15],
+						schedule: array[i][16],
+						location: array[i][17],
+						instructor: array[i][18],
+						cost: array[i][19]});
+		searchProg.push({ ageGroup: array[i][0],
+						  category: array[i][1],
+						  name: array[i][3],
+						  location: array[i][17]});
+			  
+		}
+	}
+	
+	
+	this.getSearch = function() {
+		return searchProg;
+	}
+	
+    this.getPrograms = function() {
+			return programs;
+        }
 })
+
 
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -56,7 +86,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ui.utils'])
     url: "/search",
     views: {
       'menuContent': {
-        templateUrl: "templates/search.html"
+        templateUrl: "templates/search.html",
+		controller:'progSearchCtrl'
       }
     }
   })
@@ -69,22 +100,54 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ui.utils'])
       }
     }
   })
-    .state('app.programs', {
+  
+  //Programs
+  
+  .state('app.progListCategories', {
       url: "/programs",
       views: {
         'menuContent': {
-          templateUrl: "templates/programs.html",
-          controller: 'ProgramsCtrl'
+          templateUrl: "templates/progListCategories.html",
+          controller: 'progListInfoCtrl'
         }
       }
     })
 
-  .state('app.single', {
-    url: "/programs/:playlistId",
+  .state('app.progListAgeGroup', {
+    url: "/programs/:programCategory",
     views: {
       'menuContent': {
-        templateUrl: "templates/playlist.html",
-        controller: 'PlaylistCtrl'
+        templateUrl: "templates/progListAgeGroup.html",
+        controller: 'progListInfoCtrl'
+      }
+    }
+  })
+  
+  .state('app.progListNames', {
+    url: "/programs/:programCategory/:programAgeGroup",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/progListNames.html",
+        controller: 'progListInfoCtrl'
+      }
+    }
+  })
+  
+    .state('app.progListInfo', {
+    url: "/programs/:programCategory/:programAgeGroup/:programName",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/progListInfo.html",
+        controller: 'progListInfoCtrl'
+      }
+    }
+  })
+    .state('app.progLocation', {
+    url: "/programs/:programCategory/:programAgeGroup/:programName/:programLocation",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/progLocation.html",
+        controller: 'progListInfoCtrl'
       }
     }
   });
