@@ -1,0 +1,13 @@
+<ion-view view-title="Results">
+<ion-nav-buttons side="right">
+    <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+</ion-nav-buttons>
+<ion-content>
+    <ion-list>
+      <ion-item ng-repeat="result in results | unique: 'name' | orderBy: '-name': true" href="#/app/programs/{{result.category}}/{{result.ageGroup}}/{{result.name}}">
+        <p style="white-space:normal; font-size:16px">{{result.name}}</p>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
+

@@ -40,10 +40,21 @@ angular.module('starter.controllers', [])
 	$scope.programs = MyService.getPrograms();
 })
 
-.controller('progSearchCtrl', function($scope, $rootScope, $stateParams, $timeout, MyService) {
-	$scope.searchProg = MyService.getSearch();
-	    // This is what you will bind the filter to
+.controller('progAdvSearchCtrl', function($scope, $rootScope, $stateParams, MyService) {
+	$scope.programs = MyService.getPrograms();
+	
+	$scope.search = function(category, age, agegroup, location, instructor) {
+		query = [];
+		console.log(MyService.advSearch(category,age,agegroup,location,instructor));
+	};
+})
 
+.controller('progAdvResultsCtrl', function($scope, $rootScope, $stateParams, MyService) {
+	$scope.results = MyService.getQuery();
+})
+
+.controller('progSearchCtrl', function($scope, $rootScope, $stateParams, $timeout, MyService) {
+	$scope.programs = MyService.getPrograms();
 })
 
 .controller('locationCtrl', function($scope, $rootScope, $stateParams, MyService) {
@@ -57,6 +68,7 @@ angular.module('starter.controllers', [])
 		radius: 25000,
 		keyword: $stateParams.programLocation
 	};
+	console.log($stateParams.programLocation);
 	var map=new google.maps.Map(document.getElementById("googleMap"), mapProp);
 	
 	service = new google.maps.places.PlacesService(map);
@@ -64,9 +76,12 @@ angular.module('starter.controllers', [])
 	
 	function callback(results, status) {
 		if (status == google.maps.places.PlacesServiceStatus.OK) {
+		console.log(results);
 			for (var i = 0; i < results.length; i++) {
+			if (results[i].name.indexOf($stateParams.programLocation) > -1) {
 				var place = results[i];
 				createMarker(results[i]);
+				}
 			}
 		}
 	}
@@ -77,7 +92,8 @@ angular.module('starter.controllers', [])
 			map: map,
 			position: place.geometry.location
 		});
-
+		console.log(place);
+		map.setCenter(place.geometry.location);
 		google.maps.event.addListener(marker, 'click', function() {
 			infowindow.setContent(place.name);
 			infowindow.open(map, this);

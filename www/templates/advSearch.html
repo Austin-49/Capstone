@@ -1,0 +1,20 @@
+<ion-view view-title="Advanced Search">
+<ion-nav-buttons side="right">
+    <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+</ion-nav-buttons>
+  <ion-content>
+	<input id="searchCategory" type="search" ng-model="searchCategory" placeholder="category..." aria-label="filter programs" />
+	<input id="searchAge" type="search" ng-model="searchAge" placeholder="age..." aria-label="filter programs" />
+		<select ng-model="searchAgeGroup">
+		<option value="Youth">Youth</option>
+		<option value="Early Childhood">Early Childhood</option>
+		<option value="SchoolAge">School Age</option>
+		<option value="Adult">Adult</option>
+	</select>
+	<input id="searchLocation" type="search" ng-model="searchLocation" placeholder="location..." aria-label="filter programs" />
+	<input id="searchInstructor" type="search" ng-model="searchInstructor"placeholder="instructor..." aria-label="filter programs" />
+    <form action="/#app/advSearch/nothing">
+	<button ng-click="search(searchCategory, searchAge, searchAgeGroup, searchLocation, searchInstructor)">Go!</button>
+	</form>
+ </ion-content>
+</ion-view>

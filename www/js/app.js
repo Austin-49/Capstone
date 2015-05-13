@@ -6,20 +6,30 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ui.utils'])
 
-.run(function($ionicPlatform, $http, $filter) {
+.run(function($ionicPlatform, $http, $filter, $rootScope, MyService) {
     // Store the current date to a variable so we know when we last updated the program info
-    window.localStorage['lastUpdate'] = JSON.stringify($filter('date')(new Date(), 'MM-dd-yyyy'));
 	// Make a request to the server grabbing our program info
-	$http.get('http://142.31.204.91/saanich/getCSV-1csv.php')
+	if (typeof window.localStorage['lastUpdate'] === 'undefined') {
+		window.localStorage['lastUpdate'] = JSON.stringify("010100001980");
+		console.log(window.localStorage['lastUpdate']);
+	}
+	$http.get('http://142.31.204.91/saanich/getCSV-1csv.php?' + JSON.parse(window.localStorage['lastUpdate']))
 		.success(function(data) {
 			console.log(data);
-			//Store the arrays of program info
-			window.localStorage['sharedArray'] = JSON.stringify(data);
+			if (data != "OK") {
+				//Store the arrays of program info
+				window.localStorage['sharedArray'] = JSON.stringify(data);
+				window.localStorage['lastUpdate'] = JSON.stringify($filter('date')(new Date(), 'MMddhhmmyyyy'));
+				console.log(window.localStorage['lastUpdate']);
+				MyService.createData();
+			} else {
+				console.log("Data is up to date");
+				MyService.createData();
+			}
 		})
 		.error(function() {
-			console.log("error");
+			console.log("Could not make connection to server");
 	});
-		
 		
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -34,38 +44,49 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ui.utils'])
   });
 })
 
-.service('MyService', function() {
-	var array = JSON.parse(window.localStorage['sharedArray']);
+.service('MyService', function($rootScope) {
+
 	var programs = [];
-	var searchProg = [];
-	for (i=0;i<array.length; i++) {
-		if (array[i][1] != "" ) {
-		programs.push({ category: array[i][1],
-						ageGroup: array[i][0],
-						name: array[i][3],
-						startTime: array[i][5],
-						memberRegDate: array[i][8],
-						age: array[i][15],
-						schedule: array[i][16],
-						location: array[i][17],
-						instructor: array[i][18],
-						cost: array[i][19]});
-		searchProg.push({ ageGroup: array[i][0],
-						  category: array[i][1],
-						  name: array[i][3],
-						  location: array[i][17]});
-			  
+	var queryResults = [];
+	
+	this.createData = function() {
+		var array = JSON.parse(window.localStorage['sharedArray']);
+		for (i=0;i<array.length; i++) {
+			if (array[i][1] != "" ) {
+			programs.push({ category: array[i][1],
+							ageGroup: array[i][0],
+							name: array[i][3],
+							startTime: array[i][5],
+							memberRegDate: array[i][8],
+							age: array[i][15],
+							schedule: array[i][17],
+							location: array[i][18],
+							instructor: array[i][19],
+							cost: array[i][20]});
+			}
 		}
 	}
-	
-	
-	this.getSearch = function() {
-		return searchProg;
-	}
-	
+
+
     this.getPrograms = function() {
-			return programs;
-        }
+		return programs;
+    }
+	
+	this.getQuery = function () {
+		return queryResults;
+	}
+		
+	this.advSearch = function(category,age,agegroup,location,instructor) {
+		for (i=0;i<programs.length; i++) {
+			if(programs[i].ageGroup == agegroup && programs[i].category == category && (programs[i].age.indexOf(age) > -1 || programs[i].age == "All Ages"))  {
+					queryResults.push({name: programs[i].name,
+									   category: programs[i].category,
+									   ageGroup: programs[i].ageGroup});
+
+				}
+		}
+		return queryResults;
+	}
 })
 
 
@@ -92,11 +113,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ui.utils'])
     }
   })
 
-  .state('app.browse', {
-    url: "/browse",
+  .state('app.advSearch', {
+    url: "/advSearch",
     views: {
       'menuContent': {
-        templateUrl: "templates/browse.html"
+        templateUrl: "templates/advSearch.html",
+		controller: "progAdvSearchCtrl"
+      }
+    }
+  })
+    .state('app.advResults', {
+    url: "/advSearch/:results",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/advResults.html",
+		controller: "progAdvResultsCtrl"
       }
     }
   })
