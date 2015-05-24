@@ -6,31 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ui.utils'])
 
-.run(function($ionicPlatform, $http, $filter, $rootScope, MyService) {
-    // Store the current date to a variable so we know when we last updated the program info
-	// Make a request to the server grabbing our program info
-	if (typeof window.localStorage['lastUpdate'] === 'undefined') {
-		window.localStorage['lastUpdate'] = JSON.stringify("010100001980");
-		console.log(window.localStorage['lastUpdate']);
-	}
-	$http.get('http://142.31.204.91/saanich/getCSV-1csv.php?' + JSON.parse(window.localStorage['lastUpdate']))
-		.success(function(data) {
-			console.log(data);
-			if (data != "OK") {
-				//Store the arrays of program info
-				window.localStorage['sharedArray'] = JSON.stringify(data);
-				window.localStorage['lastUpdate'] = JSON.stringify($filter('date')(new Date(), 'MMddhhmmyyyy'));
-				console.log(window.localStorage['lastUpdate']);
-				MyService.createData();
-			} else {
-				console.log("Data is up to date");
-				MyService.createData();
-			}
-		})
-		.error(function() {
-			console.log("Could not make connection to server");
-	});
-		
+.run(function($ionicPlatform, Data) {	
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -44,55 +20,69 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ui.utils'])
   });
 })
 
-.service('MyService', function($rootScope) {
+.factory('Data', function ($http, $filter, $rootScope) {
+	
+	var getData = function() {
+		if (typeof $rootScope.programs === 'undefined') { 
+			// Store the current date to a variable so we know when we last updated the program info
+			// Make a request to the server grabbing our program info
+			if (typeof window.localStorage['lastUpdate'] === 'undefined') {
+				window.localStorage['lastUpdate'] = JSON.stringify("198001010000");
+			}
+			return $http.get('http://142.31.204.91/saanich/json.php?' + JSON.parse(window.localStorage['lastUpdate']))
+			.success(function(data) {
+				if (data != "OK") {
+					//Store the arrays of program info
+					window.localStorage['lastUpdate'] = JSON.stringify($filter('date')(new Date(), 'yyyyMMddhhmm'));
+					window.localStorage['sharedArray'] = JSON.stringify(data);
+					console.log(JSON.parse(window.localStorage['sharedArray']));
+				} else {
+					console.log("Data is up to date");
+					console.log(data);
+				}
+			})
+			.error(function(data, status, headers, config) {
+				console.log(data, status, headers, config, "Could not make connection to server");
+			});	
+		}
+	};
+	return {getData: getData};
+})
 
+.service('MyService', ['Data', function(Data) {
 	var programs = [];
 	var queryResults = [];
-	
-	this.createData = function() {
-		var array = JSON.parse(window.localStorage['sharedArray']);
-		for (i=0;i<array.length; i++) {
-			if (array[i][1] != "" ) {
-			programs.push({ category: array[i][1],
-							ageGroup: array[i][0],
-							name: array[i][3],
-							startTime: array[i][5],
-							memberRegDate: array[i][8],
-							age: array[i][15],
-							schedule: array[i][17],
-							location: array[i][18],
-							instructor: array[i][19],
-							cost: array[i][20]});
-			}
-		}
-	}
-
 
     this.getPrograms = function() {
-		return programs;
-    }
+		return JSON.parse(window.localStorage['sharedArray']);
+	}
 	
-	this.getQuery = function () {
+	this.getQuery = function() {
 		return queryResults;
 	}
 		
-	this.advSearch = function(category,age,agegroup,location,instructor) {
-		for (i=0;i<programs.length; i++) {
-			if(programs[i].ageGroup == agegroup && programs[i].category == category && (programs[i].age.indexOf(age) > -1 || programs[i].age == "All Ages"))  {
-					queryResults.push({name: programs[i].name,
-									   category: programs[i].category,
-									   ageGroup: programs[i].ageGroup});
+	this.advSearch = function(array) {
+		programs = JSON.parse(window.localStorage['sharedArray']);
+		queryResults = [];
+		for (j=0;j<array.length; j++) {
+			for (i=0;i<programs.length; i++) {
+				if((programs[i].category == array[j].category || array[j].category == "") && 
+				   (programs[i].ageGroup == array[j].ageGroup || array[j].ageGroup == "") && 
+				   (programs[i].location == array[j].location || array[j].location == "" || programs[i].location.includes(array[j].location)) &&
+				   (programs[i].instructor == array[j].instructor || array[j].instructor == ""))  {
+						queryResults.push({name: programs[i].name,
+										   category: programs[i].category,
+										   ageGroup: programs[i].ageGroup});
 
-				}
+					}
+			}
 		}
-		return queryResults;
 	}
-})
+}])
 
 
 
 .config(function($stateProvider, $urlRouterProvider) {
-
 
   $stateProvider
 
@@ -123,7 +113,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ui.utils'])
     }
   })
     .state('app.advResults', {
-    url: "/advSearch/:results",
+    url: "/advResults",
     views: {
       'menuContent': {
         templateUrl: "templates/advResults.html",

@@ -4,10 +4,9 @@
 </ion-nav-buttons>
 <ion-content>
     <ion-list>
-      <ion-item ng-repeat="program in programs | unique: 'category' | orderBy: '-category': true" href="#/app/programs/{{program.category}}">
-        <p style="white-space:normal; font-size:16px">{{program.category}}</p>
+      <ion-item collection-repeat="program in programs | unique: 'category' | orderBy: '-category': true" item-height="50px" ng-click="ageCheck(program.category)" >
+		{{program.category}}
       </ion-item>
     </ion-list>
   </ion-content>
 </ion-view>
-

@@ -3,9 +3,22 @@
     <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
 </ion-nav-buttons>
   <ion-content>
+  <ion-item>
+	<input id="searchCategory"	 type="search" ng-model="searchCategory" 	placeholder="category..." 	aria-label="filter programs" />
+	<select ng-model="searchAgeGroup">
+		<option value="Youth">Youth</option>
+		<option value="Early Childhood">Early Childhood</option>
+		<option value="SchoolAge">School Age</option>
+		<option value="Adult">Adult</option>
+	</select>
+	<input id="searchLocation"	 type="search" ng-model="searchLocation" 	placeholder="location..." 	aria-label="filter programs" />
+	<input id="searchInstructor" type="search" ng-model="searchInstructor"	placeholder="instructor..." aria-label="filter programs" />
+  </ion-item>
+	<!--
+	<ion-item ng-show="checked">
 	<input id="searchCategory" type="search" ng-model="searchCategory" placeholder="category..." aria-label="filter programs" />
 	<input id="searchAge" type="search" ng-model="searchAge" placeholder="age..." aria-label="filter programs" />
-		<select ng-model="searchAgeGroup">
+	<select ng-model="searchAgeGroup">
 		<option value="Youth">Youth</option>
 		<option value="Early Childhood">Early Childhood</option>
 		<option value="SchoolAge">School Age</option>
@@ -13,8 +26,9 @@
 	</select>
 	<input id="searchLocation" type="search" ng-model="searchLocation" placeholder="location..." aria-label="filter programs" />
 	<input id="searchInstructor" type="search" ng-model="searchInstructor"placeholder="instructor..." aria-label="filter programs" />
-    <form action="/#app/advSearch/nothing">
-	<button ng-click="search(searchCategory, searchAge, searchAgeGroup, searchLocation, searchInstructor)">Go!</button>
-	</form>
+	</ion-item>
+	<input type="checkbox" ng-model="checked">
+	-->
+	<ion-item ng-click="change()">Go!</ion-item>
  </ion-content>
 </ion-view>

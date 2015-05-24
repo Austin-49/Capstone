@@ -33,20 +33,53 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('progListInfoCtrl', function($scope, $rootScope, $stateParams, MyService) {
+.controller('progListInfoCtrl', function(Data, $scope, $rootScope, $stateParams, MyService, $state) {
+	if(typeof $rootScope.programs === 'undefined') {
+		Data.getData().then(function(result) {
+			$rootScope.programs = MyService.getPrograms();
+			$scope.programs = $rootScope.programs;
+		})
+	}
 	$scope.programCategory = $stateParams.programCategory;
 	$scope.programAgeGroup = $stateParams.programAgeGroup;
 	$scope.programName = $stateParams.programName;
-	$scope.programs = MyService.getPrograms();
+	
+	$scope.ageCheck = function(category) {
+		var ageGroup = "";
+		for(i = 0; i < $scope.programs.length; i++) {
+			if($scope.programs[i].category == category) {
+				if(ageGroup == "") {
+					ageGroup = $scope.programs[i].ageGroup;
+				}
+				if(ageGroup != $scope.programs[i].ageGroup) {
+					$state.go('app.progListAgeGroup', {programCategory: category});
+					return;
+				} 
+			}
+		}
+		$state.go('app.progListNames', {programCategory: category, programAgeGroup: ageGroup});
+		return;
+	}
 })
 
-.controller('progAdvSearchCtrl', function($scope, $rootScope, $stateParams, MyService) {
-	$scope.programs = MyService.getPrograms();
-	
-	$scope.search = function(category, age, agegroup, location, instructor) {
-		query = [];
-		console.log(MyService.advSearch(category,age,agegroup,location,instructor));
+.controller('progAdvSearchCtrl', function($scope, $rootScope, $stateParams, $state, MyService) {
+	$scope.programs = $rootScope.programs;
+	$scope.query = [];
+	$scope.change = function() {
+		$scope.query.push({
+						category: document.getElementById('searchCategory').value,
+						ageGroup: document.getElementById('searchAgeGroup').value,
+						location: document.getElementById('searchLocation').value,
+						instructor: document.getElementById('searchInstructor').value
+						});	
+		MyService.advSearch($scope.query);
+		$state.go('app.advResults');
 	};
+	
+	$scope.newQuery = function() {
+		document.getElementById('query').className = "ng-show";
+		console.log(document.getElementById('query').className);
+	}
 })
 
 .controller('progAdvResultsCtrl', function($scope, $rootScope, $stateParams, MyService) {
@@ -54,7 +87,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('progSearchCtrl', function($scope, $rootScope, $stateParams, $timeout, MyService) {
-	$scope.programs = MyService.getPrograms();
+	$scope.programs = $rootScope.programs;
 })
 
 .controller('locationCtrl', function($scope, $rootScope, $stateParams, MyService) {
@@ -99,4 +132,6 @@ angular.module('starter.controllers', [])
 			infowindow.open(map, this);
 		});
 	}
+	
 });
+
