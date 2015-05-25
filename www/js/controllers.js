@@ -62,23 +62,126 @@ angular.module('starter.controllers', [])
 	}
 })
 
-.controller('progAdvSearchCtrl', function($scope, $rootScope, $stateParams, $state, MyService) {
+.controller('progAdvSearchCtrl', function($scope, $rootScope, $stateParams, $state, MyService, $ionicScrollDelegate) {
 	$scope.programs = $rootScope.programs;
 	$scope.query = [];
-	$scope.change = function() {
-		$scope.query.push({
-						category: document.getElementById('searchCategory').value,
-						ageGroup: document.getElementById('searchAgeGroup').value,
-						location: document.getElementById('searchLocation').value,
-						instructor: document.getElementById('searchInstructor').value
-						});	
+	$scope.submit = function() {
+		var divs = document.getElementById('main').getElementsByTagName('ion-item');
+		console.log(divs);
+		console.log(divs[0].children[0].value);
+		for (var i=0; i<divs.length; i++) {
+			if (divs[i].children[1].value == "") {
+				divs[i].children[2].value = "";
+			}
+			$scope.query.push({
+							category: divs[i].children[0].value,
+							age: divs[i].children[1].value,
+							ageGranularity: divs[i].children[2].value,
+							municipality: divs[i].children[4].value,
+							location: divs[i].children[5].value,
+							instructor: divs[i].children[6].value,
+							});	
+		}
+		console.log($scope.query);
 		MyService.advSearch($scope.query);
 		$state.go('app.advResults');
 	};
 	
 	$scope.newQuery = function() {
-		document.getElementById('query').className = "ng-show";
-		console.log(document.getElementById('query').className);
+
+		var button = document.getElementById("query");
+		
+		var main = document.getElementById('main').getElementsByClassName('list');
+		console.log(main[0].children);
+		var container = document.createElement('ion-item');
+		container.className = ("item");
+		
+		var category = document.createElement('input');
+		category.type = "search";
+		category.placeholder="Category...";
+		category.id="searchCategory";
+		
+		var age = document.createElement('input');
+		age.type = "search";
+		age.placeholder="Age...";
+		age.id="searchAge";
+		age.style.display = "inline-block";
+		
+		var ageGranularity = document.createElement('SELECT');
+		ageGranularity.id="searchAgeGranularity";
+		ageGranularity.style.display = "inline-block";
+		
+		var year = document.createElement('option');
+		year.text = "Years";
+		ageGranularity.add(year);
+		
+		var month = document.createElement('option');
+		month.text = "Months";
+		ageGranularity.add(month);
+		
+		var daysWeek = document.createElement('SELECT');
+		daysWeek.id="daysWeek";
+		
+		var sunday = document.createElement('option');
+		sunday.text = "Sunday";
+		daysWeek.add(sunday);
+		
+		var monday = document.createElement('option');
+		monday.text = "Monday";
+		daysWeek.add(monday);
+		
+		var tuesday = document.createElement('option');
+		tuesday.text = "Tuesday";
+		daysWeek.add(tuesday);
+		
+		var wednesday = document.createElement('option');
+		wednesday.text = "Wednesday";
+		daysWeek.add(wednesday);
+		
+		var thursday = document.createElement('option');
+		thursday.text = "Thursday";
+		daysWeek.add(thursday);
+		
+		var friday = document.createElement('option');
+		friday.text = "Friday";
+		daysWeek.add(friday);
+		
+		var saturday = document.createElement('option');
+		saturday.text = "Saturday";
+		daysWeek.add(saturday);
+		
+		
+		var municipality = document.createElement('input');
+		municipality.type = "search";
+		municipality.placeholder="Municipality...";
+		municipality.id="searchCategory";
+		
+		var location = document.createElement('input');
+		location.type = "search";
+		location.placeholder="Location...";
+		location.id="searchLocation";
+		
+		var instructor = document.createElement('input');
+		instructor.type = "search";
+		instructor.placeholder="Instructor...";
+		instructor.id="searchInstructor";
+		instructor.style.display = "inline-block";
+
+		container.appendChild(category);
+		container.appendChild(age);
+		container.appendChild(ageGranularity);
+		container.appendChild(document.createElement("br"));
+		container.appendChild(daysWeek);
+		container.appendChild(municipality);
+		container.appendChild(location);
+		container.appendChild(instructor);
+		container.appendChild(button);
+		
+		main[0].appendChild(container);
+		
+		console.log(document.getElementById('main'));
+		
+		$ionicScrollDelegate.scrollBottom();
 	}
 })
 

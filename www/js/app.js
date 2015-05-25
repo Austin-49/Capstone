@@ -55,6 +55,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ui.utils'])
 
     this.getPrograms = function() {
 		return JSON.parse(window.localStorage['sharedArray']);
+		console.log(JSON.parse(window.localStorage['sharedArray']));
 	}
 	
 	this.getQuery = function() {
@@ -66,9 +67,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ui.utils'])
 		queryResults = [];
 		for (j=0;j<array.length; j++) {
 			for (i=0;i<programs.length; i++) {
-				if((programs[i].category == array[j].category || array[j].category == "") && 
-				   (programs[i].ageGroup == array[j].ageGroup || array[j].ageGroup == "") && 
-				   (programs[i].location == array[j].location || array[j].location == "" || programs[i].location.includes(array[j].location)) &&
+				if((programs[i].category == array[j].category || array[j].category == "" || programs[i].category.includes(array[j].category)) && 
+				   (programs[i].location == array[j].location || array[j].location == "" || programs[i].location == null || programs[i].location.includes(array[j].location)) &&
 				   (programs[i].instructor == array[j].instructor || array[j].instructor == ""))  {
 						queryResults.push({name: programs[i].name,
 										   category: programs[i].category,
