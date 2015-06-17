@@ -1,19 +1,26 @@
-<ion-view view-title="{{programName}}">
+<ion-view view-title="Program Info">
+<ion-nav-buttons side="left">
+    <button class="button button-icon button-clear ion-navicon" style="left:-35px;" menu-toggle="left"></button>
+</ion-nav-buttons>
 <ion-nav-buttons side="right">
-    <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
 </ion-nav-buttons>
   <ion-content>
 	  <ion-list>
-		<ion-item collection-repeat="program in programs | filter:{ category: programCategory, ageGroup: programAgeGroup, name: programName  } | orderBy: '-name': true" item-height="250px" href="#/app/programs/{{program.category}}/{{program.ageGroup}}/{{program.name}}/{{program.location}}">
-			<p style="font-size:20px;text-decoration: underline">Registration</p>
-				<p>Start Date:{{program.memberRegDate}}</p>
-				<p>Start Time:{{program.startTime}}</p>
-			<p style="font-size:20px;text-decoration: underline">Program Info</p>
-				<p>Ages:{{program.age}}</p>
-				<p>Location:{{program.location}}</p>
-				<p style="white-space:normal">{{program.cost}}</p>
-				<p style="white-space:normal">Schedule:{{program.schedule}}</p>
-				<p>Instructor:{{program.instructor}}</p>
+		<ion-item ng-repeat="program in programs[programCategory][programAgeGroup][programName]" ng-if="program.id!==undefined">
+			<span style="white-space: normal;">	
+			<span style="font-weight:bold; text-decoration:underline; font-size:125%;">Program Information</span><br>
+				Ages: {{program.age}} <br>
+				Cost: {{program.cost}}<br>
+				Location: {{program.location}}<br>
+				Instructor: {{program.instructor}}<br>
+			<span style="font-weight:bold; text-decoration:underline; font-size:125%;">Schedule</span><br>
+				Date: {{program.progDate}}<br>
+				Time: {{program.progTime}}<br>
+				Days: {{program.progDays}}<br>
+				<br>
+		</span>
+				<button id="buttonMap" class="button button-positive" ng-click="goMap(program.location)">View Location</button>
+				<button id="buttonReg" class="button button-positive" ng-click="goRegister(program.barcode, program.website)">Register</button>
 		</ion-item>
 	  </ion-list>
   </ion-content>

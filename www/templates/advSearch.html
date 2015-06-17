@@ -1,30 +1,133 @@
 <ion-view view-title="Advanced Search">
-<ion-nav-buttons side="right">
+<ion-nav-buttons side="left">
     <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
 </ion-nav-buttons>
   <ion-content>
 	<ion-list id ="main">
 		<ion-item>
-			<input id="searchCategory"	 type="search" 	placeholder="Category..."/>
+			<input id="searchCategory"	 type="search" 	placeholder="Activity..."/>
 			<input id="searchAge" style="display:inline-block;"	 type="search" 	placeholder="Age..."/>
 			<select id="searchAgeGranularity" >
 				<option>Years</option>
 				<option>Months</option>
 			</select>
-			<br>
-			Days of the Week
-			<select multiple size="1" id ="daysWeek">
-				<option selected>Sunday</option>
-				<option selected>Monday</option>
-				<option selected>Tuesday</option>
-				<option selected>Wednesday</option>
-				<option selected>Thursday</option>
-				<option selected>Friday</option>
-				<option selected>Saturday</option>
-			</select>
 			<input id="searchMunicipality"	 type="search" 	placeholder="Municipality..."/>
-			<input id="searchLocation"	 type="search" 	placeholder="Location..."/>
+			<input id="searchLocation"	 type="search" 	placeholder="Facility..."/>
 			<input id="searchInstructor" type="search" style="display:inline-block;"	placeholder="Instructor..."/>
+			<br>
+			<button class="button button-block button-positive" style="width:180px;" ng-click="showList(0)">Schedule Options</button>
+			<div class="ng-hide" id="daysWeek0" >
+			Available on the following days:<br>
+			<input style="font-size:1em" type="checkbox" value="Su" checked="checked"> Sunday</input>
+			<br>
+			<input type="checkbox" value="M"checked="checked"> Monday</input>
+			<br>
+			<input type="checkbox" value="Tu"checked="checked"> Tuesday</input>
+			<br>
+			<input type="checkbox" value="W"checked="checked"> Wednesday</input>
+			<br>
+			<input type="checkbox" value="Th"checked="checked"> Thursday</input>
+			<br>
+			<input type="checkbox" value="F"checked="checked"> Friday</input>
+			<br>
+			<input type="checkbox" value="Sa"checked="checked"> Saturday</input>
+			<br><br> Available between<br>
+			<select id="startMonth">
+				<option value=1>January</option>
+				<option value=2>February</option>
+				<option value=3>March</option>
+				<option value=4>April</option>
+				<option value=5>May</option>
+				<option value=6>June</option>
+				<option value=7>July</option>
+				<option value=8>August</option>
+				<option value=9>September</option>
+				<option value=10>October</option>
+				<option value=11>November</option>
+				<option value=12>December</option>
+			</select>
+			<select id="startDay"> 
+			<option>01</option>       
+			<option>02</option>       
+			<option>03</option>       
+			<option>04</option>       
+			<option>05</option>       
+			<option>06</option>       
+			<option>07</option>       
+			<option>08</option>       
+			<option>09</option>       
+			<option>10</option>       
+			<option>11</option>       
+			<option>12</option>       
+			<option>13</option>       
+			<option>14</option>       
+			<option>15</option>       
+			<option>16</option>       
+			<option>17</option>       
+			<option>18</option>       
+			<option>19</option>       
+			<option>20</option>       
+			<option>21</option>       
+			<option>22</option>       
+			<option>23</option>       
+			<option>24</option>       
+			<option>25</option>       
+			<option>26</option>       
+			<option>27</option>       
+			<option>28</option>       
+			<option>29</option>       
+			<option>30</option>       
+			<option>31</option>       
+		</select>
+		<br>and<br>
+		<select id="endMonth">
+				<option value=1>January</option>
+				<option value=2>February</option>
+				<option value=3>March</option>
+				<option value=4>April</option>
+				<option value=5>May</option>
+				<option value=6>June</option>
+				<option value=7>July</option>
+				<option value=8>August</option>
+				<option value=9>September</option>
+				<option value=10>October</option>
+				<option value=11>November</option>
+				<option value=12 selected="selected">December</option>
+			</select>
+			<select id="endDay"> 
+			<option>01</option>       
+			<option>02</option>       
+			<option>03</option>       
+			<option>04</option>       
+			<option>05</option>       
+			<option>06</option>       
+			<option>07</option>       
+			<option>08</option>       
+			<option>09</option>       
+			<option>10</option>       
+			<option>11</option>       
+			<option>12</option>       
+			<option>13</option>       
+			<option>14</option>       
+			<option>15</option>       
+			<option>16</option>       
+			<option>17</option>       
+			<option>18</option>       
+			<option>19</option>       
+			<option>20</option>       
+			<option>21</option>       
+			<option>22</option>       
+			<option>23</option>       
+			<option>24</option>       
+			<option>25</option>       
+			<option>26</option>       
+			<option>27</option>       
+			<option>28</option>       
+			<option>29</option>       
+			<option>30</option>       
+			<option selected="selected">31</option>       
+		</select>
+		</div>
 			<button id="query" class="button button-positive" style="float:right;" ng-click="newQuery()">Add Query</button>
 		</ion-item>
 	</ion-list>

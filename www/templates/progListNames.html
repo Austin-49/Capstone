@@ -1,11 +1,13 @@
-<ion-view view-title="Programs">
+<ion-view view-title="Activities">
+<ion-nav-buttons side="left">
+    <button class="button button-icon button-clear ion-navicon" style="left:-35px;" menu-toggle="left"></button>
+</ion-nav-buttons>
 <ion-nav-buttons side="right">
-    <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
 </ion-nav-buttons>
   <ion-content>
 	  <ion-list>
-		<ion-item collection-repeat="program in programs | filter:{ category: programCategory, ageGroup: programAgeGroup } | unique: 'name' | orderBy: '-name': true" item-height="60px"  href="#/app/programs/{{program.category}}/{{program.ageGroup}}/{{program.name}}">
-			<p style="white-space:normal; font-size:16px">{{program.name}}<p>
+		<ion-item ng-repeat="program in programs[programCategory][programAgeGroup] | filter:{name: searchParam} | orderBy:'name'" ng-if="program.name!==undefined"  href="#/app/programs/{{programCategory}}/{{programAgeGroup}}/{{program.nameId}}">
+			{{program.name}}
 		</ion-item>
 	  </ion-list>
   </ion-content>

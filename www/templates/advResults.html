@@ -1,11 +1,21 @@
 <ion-view view-title="Results">
-<ion-nav-buttons side="right">
-    <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+<ion-nav-buttons side="left">
+    <button class="button button-icon button-clear ion-navicon" style="left:-35px;" menu-toggle="left"></button>
 </ion-nav-buttons>
 <ion-content>
     <ion-list>
-      <ion-item collection-repeat="result in results | unique: 'name' | orderBy: '-name': true" href="#/app/programs/{{result.category}}/{{result.ageGroup}}/{{result.name}}">
-        <p style="white-space:normal; font-size:16px">{{result.name}}</p>
+      <ion-item collection-repeat="result in results | unique: 'name' | orderBy: '-name': true" href="#/app/programs/{{result.categoryPos}}/{{result.ageGroupPos}}/{{result.namePos}}">
+        <p style="white-space:normal; font-size:16px;">{{result.name}}</p>
+			<ion-item style="padding:2px;">
+			<span style="white-space:normal; font-size:.75em;" ng-if="result.query.category != ''">Category: {{result.query.category}} <br></span>
+			<span style="white-space:normal; font-size:.75em;" ng-if="result.query.age >= 0">Age: {{result.query.age}} {{result.query.ageGranularity}}<br></span>
+			<span style="white-space:normal; font-size:.75em;" ng-if="result.query.location != ''">Location: {{result.query.location}} <br></span>
+			<span style="white-space:normal; font-size:.75em;" ng-if="result.query.municipality != ''">Municipality: {{result.query.municipality}} <br></span>
+			<span style="white-space:normal; font-size:.75em;" ng-if="result.query.daysWeek.length != 7">Days of the Week: {{result.query.daysWeek}} <br></span>
+			<span style="white-space:normal; font-size:.75em;" ng-if="result.query.scheduleText != 'January 01 - December 31'">Date: {{result.query.scheduleText}} <br></span>
+			<span style="white-space:normal; font-size:.75em;" ng-if="result.query.instructor != ''">Instructor: {{result.query.instructor}} <br></span>
+			
+			</ion-item>
       </ion-item>
     </ion-list>
   </ion-content>
