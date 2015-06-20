@@ -1,4 +1,4 @@
-<ion-view view-title="Advanced Search">
+<ion-view view-title="Search">
 <ion-nav-buttons side="left">
     <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
 </ion-nav-buttons>
@@ -11,9 +11,14 @@
 				<option>Years</option>
 				<option>Months</option>
 			</select>
-			<input id="searchMunicipality"	 type="search" 	placeholder="Municipality..."/>
-			<input id="searchLocation"	 type="search" 	placeholder="Facility..."/>
+			<br>
 			<input id="searchInstructor" type="search" style="display:inline-block;"	placeholder="Instructor..."/>
+			<input id="searchLocation"	 type="search" 	placeholder="Facility..."/>
+			<select id="municipality">
+				<option value="none">Municipality</option>
+				<option value="Saanich">Saanich</option>
+				<option value="Westshore">WestShore</option>
+			</select>
 			<br>
 			<button class="button button-block button-positive" style="width:180px;" ng-click="showList(0)">Schedule Options</button>
 			<div class="ng-hide" id="daysWeek0" >

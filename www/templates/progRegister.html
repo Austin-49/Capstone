@@ -1,18 +1,18 @@
 <ion-view view-title="Registration">
 <ion-nav-buttons side="left">
-    <button class="button button-icon button-clear ion-navicon" style="left:-35px;" menu-toggle="left"></button>
+    <button class="button button-icon button-clear ion-navicon"  menu-toggle="left"></button>
 </ion-nav-buttons>
 <ion-content>
     <ion-list>
       <ion-item>
 	  <span style="white-space: normal;">To register for your activity copy the barcode below and click the button at the bottom of the page and insert your barcode on Rec Online.
 	  <br> <br> 
-	  Your barcode goes here:
-	  <img src="../img/barcode.png"  width="280">
+	  On Rec Online your barcode goes here:
+	  <img ng-src="barcode.png"  width="280">
 	  <br>
 	  <br>
-	  Your barcode: <b>{{barcode}}</b>
-	  <button id="recOnline" class="button button-positive" style="float:right;" ng-click="RecOnline(website)">Go!</button>
+	  Your barcode: <input size="6" value="{{barcode}}"></input><br><br>
+	  <button id="recOnline" class="button button-positive" style="float:right;" ng-click="RecOnline(website)">Go Register</button>
 	  </span>
 	  
       </ion-item>

@@ -1,11 +1,28 @@
-<ion-view view-title="Help">
+<ion-view view-title="FAQ's">
 <ion-nav-buttons side="left">
     <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
 </ion-nav-buttons>
 <ion-content>
     <ion-list>
       <ion-item>
-	  <span style="white-space: normal;">Welcome to the Saanich Parks & Rec Activity App!</span>
+	  <span style="white-space: normal;"><b>Q:</b> How do I register for a program or activity?</span>
+	  <br>
+	  <hr>
+	  <span style="white-space: normal;"><b>A:</b> The Saanich Parks & Recreation App is unable to provide the service of registering for programs and activities at this time. However within a program's information page you may click on 'Register' and follow the instructions given or view our tutorial below.</span>
+	  <br>
+	  <button class="button button-positive" ng-click="regTutorial()">Registration Tutorial</button>
+      </ion-item>
+      <ion-item>
+	  <span style="white-space: normal;"><b>Q:</b> Some programs don't show a location when I click 'View Location' why is this?</span>
+	  <br>
+	  <hr>
+	  <span style="white-space: normal;"><b>A:</b> Due to the Google Maps API requiring specific location names, it is not uncommon for a program or activity to occasionally not return a result when trying to view a location.</span>
+      </ion-item>
+      <ion-item>
+	  <span style="white-space: normal;"><b>Q:</b> Some information regarding programs is not there or set as Unavailable, what does this mean?</span>
+	  <br>
+	  <hr>
+	  <span style="white-space: normal;"><b>A:</b> When populating our application with data we try our hardest to ensure everything you view is correct and up to date, however certain information such as the instructor teaching a program can be very volatile and thus might be unavailable.</span>
       </ion-item>
     </ion-list>
   </ion-content>
